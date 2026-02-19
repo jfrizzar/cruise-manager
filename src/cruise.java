@@ -35,4 +35,53 @@ public class cruise {
     public double getTicketCost(){
         return ticketCost;
     }
+
+    public int getTicketSoldCount(){
+        return ticketSoldCount;
+    }
+
+    public static int getTotalTicketSoldCount(){
+        return totalTicketSoldCount;
+    }
+
+    public static double getTotalEarning(){
+        return totalEarning;
+    }
+
+    public void setCruiseID(String cruiseID){
+        this.cruiseID = cruiseID;
+    }
+
+    public void setCruiseRoute(String cruiseRoute){
+        this.cruiseRoute = cruiseRoute;
+    }
+
+    public static void setCruiseCount(int cruiseCount){
+        cruise.cruiseCount = cruiseCount;
+    }
+
+    public void setTicketCost(double ticketCost){
+        this.ticketCost = ticketCost;
+    }
+
+    public void setTicketSoldCount(int ticketSoldCount){
+        this.ticketSoldCount = ticketSoldCount;
+    }
+
+    public static void setTotalTicketSoldCount(int totalTicketSoldCount){
+        cruise.totalTicketSoldCount = totalTicketSoldCount;
+    }
+
+    public static void setTotalEarning(double totalEarning){
+        cruise.totalEarning = totalEarning;
+    }
+
+    public String toString(){
+        String details = "";
+        return details;
+    }
+
+
+
+    
 }
