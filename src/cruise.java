@@ -15,11 +15,13 @@ public class cruise {
     };
 
     public cruise(String cruiseID, String cruiseRoute, double ticketCost, int ticketSoldCount){
-        
+        setCruiseID(cruiseID);
+        setCruiseRoute(cruiseRoute);
+        setTicketCost(ticketCost);
         cruiseCount++;
     };
 
-    //All of the get methods
+    //Get methods
     public String getCruiseID(){
         return cruiseID;
     }
@@ -48,27 +50,46 @@ public class cruise {
         return totalEarning;
     }
 
+    //Set methods
     public void setCruiseID(String cruiseID){
+        if(!cruiseID.startsWith("J")){
+            throw new IllegalArgumentException("cruiseID must start with \"J\".");
+        }
         this.cruiseID = cruiseID;
     }
 
     public void setCruiseRoute(String cruiseRoute){
+        if(cruiseRoute.isEmpty() || cruiseRoute == null){
+            throw new IllegalArgumentException("Cruise route cannot be empty. Enter a cruise route in the format: location1 - location2.");
+        }
         this.cruiseRoute = cruiseRoute;
     }
 
     public static void setCruiseCount(int cruiseCount){
+        if(cruiseCount < 0){
+            throw new IllegalArgumentException("Cruise count cannot be less than 0.");
+        }
         cruise.cruiseCount = cruiseCount;
     }
 
     public void setTicketCost(double ticketCost){
+        if(ticketCost < 0.01){
+            throw new IllegalArgumentException("The ticket cost cannot be less than $0.01.");
+        }
         this.ticketCost = ticketCost;
     }
 
     public void setTicketSoldCount(int ticketSoldCount){
+        if(ticketSoldCount < 0){
+            throw new IllegalArgumentException("The ticket sold count cannot be less than 0.");
+        }
         this.ticketSoldCount = ticketSoldCount;
     }
 
     public static void setTotalTicketSoldCount(int totalTicketSoldCount){
+        if(totalTicketSoldCount < 0){
+            throw new IllegalArgumentException("The total ticket sold count a cannot be less than 0");
+        }
         cruise.totalTicketSoldCount = totalTicketSoldCount;
     }
 
@@ -80,5 +101,4 @@ public class cruise {
         String details = "";
         return details;
     }
-
 }
