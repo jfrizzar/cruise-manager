@@ -2,15 +2,61 @@ import javax.swing.JOptionPane;
 
 public class cruiseImp{
     public static void main(String args[]){
-
-        cruise c1 = new cruise("J1", "Jamaica - Nassau", 250.10, 0);
-
         String option;
+        int optionInteger;
+        final int MAX_CRUISES = 10;
+        cruise[] cruisesArray = new cruise[10];
 
         do{
+            //Get user input from the option selection menu
             option = customerOption();
+
+            optionInteger = Integer.parseInt(option);
+            //Create a cruise method is executed
+            if(optionInteger == 1){
+                if(cruise.getCruiseCount() >= MAX_CRUISES){
+                    JOptionPane.showMessageDialog(null, "The maximum number of cruises has been reached. Please choose another option or delete existing cruises");
+                }
+                cruise currentCruise = createCruise();
+                cruisesArray[cruise.getCruiseCount() - 1] = currentCruise;
+            }
+            //Search a cruise method is executed
+            if(optionInteger == 2){
+
+            }
+            //Remove a cruise method is executed
+            if(optionInteger == 3){
+
+            }
+            //Sell a cruise method is executed
+            if(optionInteger == 4){
+
+            }
+            //Display all cruises method is executed
+            if(optionInteger == 5){
+
+            }
         }while(option != "exit");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -37,4 +83,21 @@ public class cruiseImp{
                 }
             return option;
     }
+
+    //TODO Create a cruise method
+    public static cruise createCruise(){
+        cruise currentCruise = new cruise("J", "location1 - location2", 0.01, 0);
+        currentCruise.setCruiseID(JOptionPane.showInputDialog("Enter a cruise ID starting with the letter \"J\""));
+        currentCruise.setCruiseRoute(JOptionPane.showInputDialog("Enter a cruise route in the format: location1 - location2."));
+        currentCruise.setTicketCost(Double.parseDouble(JOptionPane.showInputDialog("Enter the ticket cost for the cruise")));
+        return currentCruise;
+    }
+
+    //TODO Search for a cruise method
+
+    //TODO Remove a cruise method
+
+    //TODO Sell cruise ticket method
+
+    //TODO Display all cruises method
 }
