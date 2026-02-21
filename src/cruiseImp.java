@@ -32,7 +32,7 @@ public class cruiseImp{
 
             //Remove a cruise method is executed
             if(optionInteger == 3){
-                removeCruise(cruisesArray);
+                cruisesArray = removeCruise(cruisesArray);
             }
 
             //Sell a cruise method is executed
@@ -121,10 +121,31 @@ public class cruiseImp{
     //TODO Remove a cruise method
     public static cruise[] removeCruise(cruise[] cruisesArray){
         String allCruises = "";
+        int userOption = 0;
+
+        if(cruise.getCruiseCount() == 0){
+            JOptionPane.showMessageDialog(null, "There are no cruises currently.\n Returning to main menu");
+            return cruisesArray;
+        }
+
         for(int i = 0; i < cruise.getCruiseCount(); i++){
             allCruises += "( " + (i + 1) + " ) " + cruisesArray[i].toString() + "\n";
         }
-        int userOption = Integer.parseInt(JOptionPane.showInputDialog(allCruises + "\nSelect the number of the cruise that you want to remove."));
+        
+        try{
+            userOption = Integer.parseInt(JOptionPane.showInputDialog(allCruises + "\nSelect the number of the cruise that you want to remove."));            
+        }catch(NumberFormatException nfe){
+            JOptionPane.showMessageDialog(null, "Error, please enter a number that is available on the menu.");
+            return cruisesArray;
+        }
+
+        
+        if(userOption < 0 || userOption > cruise.getCruiseCount()){
+            JOptionPane.showMessageDialog(null, "Error, please enter a number that is available on the menu.");
+            return cruisesArray;
+        }
+        
+        //Convert array to list in order for remove function to be possible.
         List<cruise> cruisesList = new ArrayList<>(Arrays.asList(cruisesArray));
         cruisesList.remove(userOption - 1);
         cruisesList.add(null);
