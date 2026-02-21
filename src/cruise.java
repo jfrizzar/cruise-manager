@@ -98,7 +98,6 @@ public class cruise {
     }
 
     public String toString(){
-        String details = "";
-        return details;
+        return "Cruise ID: " + getCruiseID() + " | Cruise Route: " + getCruiseRoute() + " | Ticket Cost: $" + getTicketCost() + " | Ticket Sold Count: " + getTicketSoldCount();
     }
 }

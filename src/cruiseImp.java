@@ -5,7 +5,7 @@ public class cruiseImp{
         String option;
         int optionInteger;
         final int MAX_CRUISES = 10;
-        cruise[] cruisesArray = new cruise[10];
+        cruise[] cruisesArray = new cruise[MAX_CRUISES];
 
         do{
             //Get user input from the option selection menu
@@ -22,6 +22,8 @@ public class cruiseImp{
             }
             //Search a cruise method is executed
             if(optionInteger == 2){
+                String searchedCruise = searchCruise(cruisesArray);
+                JOptionPane.showMessageDialog(null, searchedCruise);
 
             }
             //Remove a cruise method is executed
@@ -84,7 +86,7 @@ public class cruiseImp{
             return option;
     }
 
-    //TODO Create a cruise method
+    //Create a cruise method
     public static cruise createCruise(){
         cruise currentCruise = new cruise("J", "location1 - location2", 0.01, 0);
         currentCruise.setCruiseID(JOptionPane.showInputDialog("Enter a cruise ID starting with the letter \"J\""));
@@ -93,7 +95,21 @@ public class cruiseImp{
         return currentCruise;
     }
 
-    //TODO Search for a cruise method
+    //Search for a cruise method
+    public static String searchCruise(cruise[] cruisesArray){
+
+        String searchID = JOptionPane.showInputDialog("Enter the cruise ID of the cruise you are searching for");
+        for(int i = 0; i < cruisesArray.length; i++){
+            try{
+                if(cruisesArray[i].getCruiseID().equals(searchID)){
+                    return cruisesArray[i].toString();
+                }
+            }catch(NullPointerException npe){
+                return "Cruise could not be found";
+            }
+        }
+        return "Cruise could not be found";
+    }
 
     //TODO Remove a cruise method
 
