@@ -1,13 +1,10 @@
 import javax.swing.JOptionPane;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.*;
 
 public class cruiseImp{
     public static void main(String args[]){
         String option;
         int optionInteger;
-        final int MAX_CRUISES = 10;
+        final int MAX_CRUISES = 5;
         cruise[] cruisesArray = new cruise[MAX_CRUISES];
 
         do{
@@ -122,6 +119,7 @@ public class cruiseImp{
     public static cruise[] removeCruise(cruise[] cruisesArray){
         String allCruises = "";
         int userOption = 0;
+        int MAX_CRUISES = 5;
 
         if(cruise.getCruiseCount() == 0){
             JOptionPane.showMessageDialog(null, "There are no cruises currently.\n Returning to main menu");
@@ -139,17 +137,22 @@ public class cruiseImp{
             return cruisesArray;
         }
 
+        userOption -= 1;
+
         
-        if(userOption < 0 || userOption > cruise.getCruiseCount()){
+        if(userOption < 0 || userOption > cruise.getCruiseCount() - 1){
             JOptionPane.showMessageDialog(null, "Error, please enter a number that is available on the menu.");
             return cruisesArray;
         }
         
-        //Convert array to list in order for remove function to be possible.
-        List<cruise> cruisesList = new ArrayList<>(Arrays.asList(cruisesArray));
-        cruisesList.remove(userOption - 1);
-        cruisesList.add(null);
-        cruisesArray = cruisesList.toArray(cruise[] ::new);
+        for(int i = userOption; i < MAX_CRUISES - userOption; i++){
+            try{
+                cruisesArray[i] = cruisesArray[i + 1];
+            }catch(ArrayIndexOutOfBoundsException aioobe){
+                cruisesArray[i] = null;
+                return cruisesArray;
+            }
+        }
         return cruisesArray;
     }
 
