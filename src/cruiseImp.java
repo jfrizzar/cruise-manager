@@ -1,4 +1,7 @@
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.*;
 
 public class cruiseImp{
     public static void main(String args[]){
@@ -10,8 +13,8 @@ public class cruiseImp{
         do{
             //Get user input from the option selection menu
             option = customerOption();
-
             optionInteger = Integer.parseInt(option);
+
             //Create a cruise method is executed
             if(optionInteger == 1){
                 if(cruise.getCruiseCount() >= MAX_CRUISES){
@@ -20,24 +23,28 @@ public class cruiseImp{
                 cruise currentCruise = createCruise();
                 cruisesArray[cruise.getCruiseCount() - 1] = currentCruise;
             }
+            
             //Search a cruise method is executed
             if(optionInteger == 2){
                 String searchedCruise = searchCruise(cruisesArray);
                 JOptionPane.showMessageDialog(null, searchedCruise);
-
             }
+
             //Remove a cruise method is executed
             if(optionInteger == 3){
-
+                removeCruise(cruisesArray);
             }
+
             //Sell a cruise method is executed
             if(optionInteger == 4){
 
             }
+
             //Display all cruises method is executed
             if(optionInteger == 5){
 
             }
+
         }while(option != "exit");
     }
 
@@ -112,6 +119,18 @@ public class cruiseImp{
     }
 
     //TODO Remove a cruise method
+    public static cruise[] removeCruise(cruise[] cruisesArray){
+        String allCruises = "";
+        for(int i = 0; i < cruise.getCruiseCount(); i++){
+            allCruises += "( " + (i + 1) + " ) " + cruisesArray[i].toString() + "\n";
+        }
+        int userOption = Integer.parseInt(JOptionPane.showInputDialog(allCruises + "\nSelect the number of the cruise that you want to remove."));
+        List<cruise> cruisesList = new ArrayList<>(Arrays.asList(cruisesArray));
+        cruisesList.remove(userOption - 1);
+        cruisesList.add(null);
+        cruisesArray = cruisesList.toArray(cruise[] ::new);
+        return cruisesArray;
+    }
 
     //TODO Sell cruise ticket method
 
