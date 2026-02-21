@@ -119,7 +119,6 @@ public class cruiseImp{
     public static cruise[] removeCruise(cruise[] cruisesArray){
         String allCruises = "";
         int userOption = 0;
-        int MAX_CRUISES = 5;
 
         if(cruise.getCruiseCount() == 0){
             JOptionPane.showMessageDialog(null, "There are no cruises currently.\n Returning to main menu");
@@ -145,14 +144,12 @@ public class cruiseImp{
             return cruisesArray;
         }
         
-        for(int i = userOption; i < MAX_CRUISES - userOption; i++){
-            try{
-                cruisesArray[i] = cruisesArray[i + 1];
-            }catch(ArrayIndexOutOfBoundsException aioobe){
-                cruisesArray[i] = null;
-                return cruisesArray;
-            }
+        for(int i = userOption; i < cruisesArray.length - 1; i++){
+            cruisesArray[i] = cruisesArray[i + 1];
         }
+        
+        int finalIndex = cruisesArray.length - 1;
+        cruisesArray[finalIndex] = null;
         return cruisesArray;
     }
 
