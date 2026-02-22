@@ -4,7 +4,8 @@ public class cruiseImp{
     public static void main(String args[]){
         String option;
         int optionInteger;
-        final int MAX_CRUISES = 5;
+        double revenue = 0;
+        final int MAX_CRUISES = 10;
         cruise[] cruisesArray = new cruise[MAX_CRUISES];
 
         do{
@@ -34,12 +35,12 @@ public class cruiseImp{
 
             //Sell a cruise method is executed
             if(optionInteger == 4){
-
+                revenue += sellCruise(cruisesArray);
             }
 
             //Display all cruises method is executed
             if(optionInteger == 5){
-
+                displayCruises(cruisesArray);
             }
 
         }while(option != "exit");
@@ -115,7 +116,7 @@ public class cruiseImp{
         return "Cruise could not be found";
     }
 
-    //TODO Remove a cruise method
+    //Remove a cruise method
     public static cruise[] removeCruise(cruise[] cruisesArray){
         String allCruises = "";
         int userOption = 0;
@@ -153,7 +154,52 @@ public class cruiseImp{
         return cruisesArray;
     }
 
-    //TODO Sell cruise ticket method
+    //Sell cruise ticket method
+    public static double sellCruise(cruise[] cruisesArray){
+        String allCruises = "";
+        int userOption = 0;
+        int ticketAmount = 0;
 
-    //TODO Display all cruises method
+        if(cruise.getCruiseCount() == 0){
+            JOptionPane.showMessageDialog(null, "There are no cruises currently.\n Returning to main menu");
+            return -1;
+        }
+
+        for(int i = 0; i < cruise.getCruiseCount(); i++){
+            allCruises += "( " + (i + 1) + " ) " + cruisesArray[i].toString() + "\n";
+        }
+        
+        try{
+            userOption = Integer.parseInt(JOptionPane.showInputDialog(allCruises + "\nSelect the cruise for which you want to sell tickets."));            
+        }catch(NumberFormatException nfe){
+            JOptionPane.showMessageDialog(null, "Error, please enter a number that is available on the menu.");
+            return -1;
+        }
+
+        userOption -= 1;
+
+        try{
+            ticketAmount = Integer.parseInt(JOptionPane.showInputDialog("How many tickets do you want to sell for cruise " + cruisesArray[userOption].getCruiseID()));
+        }catch(NumberFormatException nfe){
+            JOptionPane.showMessageDialog(null, "Error, please enter a valid integer");
+        }
+
+        cruisesArray[userOption].setTicketSoldCount(ticketAmount);
+
+        return ticketAmount * cruisesArray[userOption].getTicketCost();
+    }
+
+    //Display all cruises method
+    public static void displayCruises(cruise[] cruisesArray){
+        String allCruises = "";
+
+        if(cruise.getCruiseCount() == 0){
+            JOptionPane.showMessageDialog(null, "There are no cruises currently.\n Returning to main menu");
+        }
+
+        for(int i = 0; i < cruise.getCruiseCount(); i++){
+            allCruises += "( " + (i + 1) + " ) " + cruisesArray[i].toString() + "\n";
+        }
+        JOptionPane.showMessageDialog(null, allCruises);
+    }
 }
