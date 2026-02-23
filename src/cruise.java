@@ -88,6 +88,7 @@ public class cruise {
             this.ticketCost = ticketCost;           
         }catch(NumberFormatException nfe){
             JOptionPane.showMessageDialog(null, "The ticket cost must be a valid decimal number.");
+        }
     }
 
     public void setTicketSoldCount(int ticketSoldCount){
