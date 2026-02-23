@@ -123,7 +123,7 @@ public class cruise {
             JOptionPane.showMessageDialog(null,"Total earnings must be a valid decimal number");
         }
     }
-
+    //Special purpose method which converts objects attributes to a well formatted string
     public String toString(){
         return "Cruise ID: " + getCruiseID() + " | Cruise Route: " + getCruiseRoute() + " | Ticket Cost: $" + String.format("%.2f", getTicketCost()) + " | Ticket Sold Count: " + getTicketSoldCount();
     }

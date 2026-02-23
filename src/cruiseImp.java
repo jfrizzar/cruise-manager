@@ -2,6 +2,7 @@ import javax.swing.JOptionPane;
 
 public class cruiseImp{
     public static void main(String args[]){
+        //Initiating variables that need to be used throughout main method and passed into methods
         String option;
         int optionInteger;
         final int MAX_CRUISES = 10;
@@ -82,7 +83,8 @@ public class cruiseImp{
 
 
 
-    //This method presents a menu to the users and prompts them to select an option
+    //This method presents a menu to the users and prompts them to select an option, if user types exit program ends.
+  
     public static String customerOption(){
             String option = JOptionPane.showInputDialog("~~ Welcome to the Frizzar Cruise Company ~~\n" +
             "Please one of the following options\n\n" +
@@ -114,7 +116,9 @@ public class cruiseImp{
 
 
     /*Create Cruise Method, this method creates an object cruise with user input. It carefully updates the cruise count
-    that is to be used in the rest of the program. This object is added to the array of cruises*/
+    that is to be used in the rest of the program. This object is added to the array of cruises. If exception occurs
+    null is returned instead of an object.*/
+
     public static cruise createCruise(){
         try{
             cruise currentCruise = new cruise("J----", "location1 - location2", 0.01, 0);
@@ -147,6 +151,7 @@ public class cruiseImp{
 
     /*Search Cruise Method, this method asks the user for a cruise ID and loops over the cruise array trying
     to match the cruise ID to the ID of the cruise object within the array*/
+
     public static void searchCruise(cruise[] cruisesArray){
         String searchID = JOptionPane.showInputDialog("Enter the cruise ID of the cruise " +
         "you are searching for. Cruise ID's start with the letter J.");
@@ -244,6 +249,7 @@ public class cruiseImp{
                 return;
         }
 
+        //This section checks to see if there are enough tickets. If there are cruise ticket sold count and revenue is updated.
         try{
             ticketAmount = Integer.parseInt(JOptionPane.showInputDialog("How many tickets do you want to sell for cruise: " 
             + cruisesArray[userOption].getCruiseID()));
