@@ -4,7 +4,7 @@ public class cruiseImp{
     public static void main(String args[]){
         String option;
         int optionInteger;
-        final int MAX_CRUISES = 5;
+        final int MAX_CRUISES = 10;
         final int MAX_TICKETS = 300;
         cruise[] cruisesArray = new cruise[MAX_CRUISES];
 
@@ -20,7 +20,7 @@ public class cruiseImp{
             //Create a cruise method is executed
             if(optionInteger == 1){
                 if(cruise.getCruiseCount() >= MAX_CRUISES){
-                    JOptionPane.showMessageDialog(null, "The maximum number of cruises has been reached." +
+                    JOptionPane.showMessageDialog(null, "Maximum number of cruises has been reached." +
                     " Please choose another option or delete an existing cruise.");
                 }
                 else{
@@ -37,13 +37,7 @@ public class cruiseImp{
             
             //Search a cruise method is executed
             if(optionInteger == 2){
-                String searchedCruise = searchCruise(cruisesArray);
-                if(searchedCruise == null){
-                    continue;
-                }
-                else{
-                    JOptionPane.showMessageDialog(null, searchedCruise);
-                }
+                searchCruise(cruisesArray);
             }
 
             //Remove a cruise method is executed
@@ -90,28 +84,27 @@ public class cruiseImp{
 
     //This method presents a menu to the users and prompts them to select an option
     public static String customerOption(){
-        String option;
-            option = JOptionPane.showInputDialog("~~ Welcome to the Frizzar Cruise Company ~~\n" +
+            String option = JOptionPane.showInputDialog("~~ Welcome to the Frizzar Cruise Company ~~\n" +
             "Please one of the following options\n\n" +
-            "(1) Create a new cruise\n" +
-            "(2) Search for an existing cruise\n" +
-            "(3) Remove an existing cruise\n" +
-            "(4) Sell tickets for a cruise\n" +
-            "(5) Display all cruises\n\nType \"Exit\" if you are finished.");
+            "(1) Create Cruise\n" +
+            "(2) Search Cruise\n" +
+            "(3) Remove Cruise\n" +
+            "(4) Book Cruise\n" +
+            "(5) Display Cruises\n\nType \"exit\" to exit the program.");
 
             try{
                 if(option.toLowerCase().equals("exit"))
                     {
-                        JOptionPane.showMessageDialog(null, "Exiting program.");
+                        JOptionPane.showMessageDialog(null, "Exiting Program.");
                         return "exit";
                     }
                 else if(Integer.parseInt(option) < 1 || Integer.parseInt(option) > 5)
                     {
-                        JOptionPane.showMessageDialog(null, "Enter an integer between 0 and 5.");
+                        JOptionPane.showMessageDialog(null, "Enter an integer between 1 and 5.");
                         return "";
                     }
             }catch(NumberFormatException nfe){
-                JOptionPane.showMessageDialog(null, "Enter an integer between 0 and 5.");
+                JOptionPane.showMessageDialog(null, "Enter an integer between 1 and 5.");
                 return "";
             }catch(NullPointerException npe){
                 return "exit";
@@ -120,13 +113,14 @@ public class cruiseImp{
     }
 
 
-    //Create a cruise method
+    /*Create Cruise Method, this method creates an object cruise with user input. It carefully updates the cruise count
+    that is to be used in the rest of the program. This object is added to the array of cruises*/
     public static cruise createCruise(){
         try{
             cruise currentCruise = new cruise("J----", "location1 - location2", 0.01, 0);
             currentCruise.setCruiseID(JOptionPane.showInputDialog("Enter a 5 character cruise ID starting with the letter \"J\"."));
             currentCruise.setCruiseRoute(JOptionPane.showInputDialog("Enter a cruise route in the format: location1 - location2."));
-            String ticketString = JOptionPane.showInputDialog("Enter the ticket cost for the cruise");
+            String ticketString = JOptionPane.showInputDialog("Enter the ticket cost for the cruise.");
 
             try{
                 double ticketDouble = Double.parseDouble(ticketString);
@@ -153,38 +147,44 @@ public class cruiseImp{
                 }
     }
 
-    //Search for a cruise method
-    public static String searchCruise(cruise[] cruisesArray){
+    /*Search Cruise Method, this method asks the user for a cruise ID and loops over the cruise array trying
+    to match the cruise ID to the ID of the cruise object within the array*/
+    public static void searchCruise(cruise[] cruisesArray){
         String searchID = JOptionPane.showInputDialog("Enter the cruise ID of the cruise " +
-        "you are searching for. Cruise ID's start with the letter J");
+        "you are searching for. Cruise ID's start with the letter J.");
 
         if(searchID == null){
-            searchID = null;
-                return searchID;
+                return;
         }
         else if(!searchID.startsWith("J") || searchID.length() != 5){
-            return "Invalid input. Please enter a 5 character cruise ID starting with the letter J.";
+            JOptionPane.showMessageDialog(null, "Please enter a 5 character cruise ID starting with the letter J.");
+                return;
         }
 
         for(int i = 0; i < cruisesArray.length; i++){
             try{
                 if(cruisesArray[i].getCruiseID().equals(searchID)){
-                    return cruisesArray[i].toString();
+                    JOptionPane.showMessageDialog(null, cruisesArray[i].toString());
+                     return;
                 }
             }catch(NullPointerException npe){
                 break;
             }
         }
-        return "Cruise could not be found";
+        JOptionPane.showMessageDialog(null, "Cruise could not be found.");
+            return;
     }
 
-    //Remove a cruise method
+    /*Remove Cruise Method, this method checks to see if there are any cruises and if there are presents them
+    to the user. After the user has made a selection of which cruises to delete a for loop is used to loop
+    over appropriate elements shifting elements to the left to save over eachother*/
+
     public static cruise[] removeCruise(cruise[] cruisesArray){
         String allCruises = "";
         int userOption = 0;
 
         if(cruise.getCruiseCount() == 0){
-            JOptionPane.showMessageDialog(null, "There are no cruises currently.");
+            JOptionPane.showMessageDialog(null, "There are currently no cruises.");
             return cruisesArray;
         }
 
@@ -196,12 +196,12 @@ public class cruiseImp{
             //Take user option an subtract 1 from it to correspond to element in array
             userOption = Integer.parseInt(JOptionPane.showInputDialog(allCruises + "\nSelect the cruise that you want to remove.")) - 1;   
         }catch(NumberFormatException nfe){
-            JOptionPane.showMessageDialog(null, "Error, please enter a number that is available on the menu.");
+            JOptionPane.showMessageDialog(null, "Please enter a number that is available on the menu.");
             return cruisesArray;
         }
 
         if(userOption < 0 || userOption > cruise.getCruiseCount() - 1){
-            JOptionPane.showMessageDialog(null, "Error, please enter a number that is available on the menu.");
+            JOptionPane.showMessageDialog(null, "Please enter a number that is available on the menu.");
             return cruisesArray;
         }
         
@@ -209,20 +209,26 @@ public class cruiseImp{
             cruisesArray[i] = cruisesArray[i + 1];
         }
         
-        //Setting the final element to null due to not being able to do it in the for loop
+        //Setting the final element to null due to not being able to do it in the for loop without a array index error.
         cruisesArray[cruisesArray.length - 1] = null;
-        return cruisesArray;
+
+        //Decrement total cruise count by 1
+        cruise.setCruiseCount(cruise.getCruiseCount() - 1);
+            return cruisesArray;
     }
 
-    //Sell cruise ticket method
-    public static double sellCruise(cruise[] cruisesArray, int MAX_TICKETS){
+    /*Book Cruise Method, this method uses a loop to present a string of all cruises to a user,
+    the user can then select which cruise they want to sell tickets for. Individual cruise ticket
+    sold count and revenue is updated along with the total revenue*/
+
+    public static void sellCruise(cruise[] cruisesArray, int MAX_TICKETS){
         String allCruises = "";
         int userOption = 0;
         int ticketAmount = 0;
 
         if(cruise.getCruiseCount() == 0){
-            JOptionPane.showMessageDialog(null, "There are no cruises currently.\n Returning to main menu");
-            return 0;
+            JOptionPane.showMessageDialog(null, "There are currently no cruises.");
+                return;
         }
 
         for(int i = 0; i < cruise.getCruiseCount(); i++){
@@ -230,43 +236,52 @@ public class cruiseImp{
         }
         
         try{
-            userOption = Integer.parseInt(JOptionPane.showInputDialog(allCruises + "\nSelect the cruise for which you want to sell tickets.")) - 1;
+            userOption = Integer.parseInt(JOptionPane.showInputDialog(allCruises + "\nSelect a cruise")) - 1;
             if(userOption < 0 || userOption > cruise.getCruiseCount() - 1){
-                JOptionPane.showMessageDialog(null, "Error, please enter a number that is available on the menu.");
-                    return 0;  
+                JOptionPane.showMessageDialog(null, "Please enter a number that is available on the menu.");
+                    return;  
             }
         }catch(NumberFormatException nfe){
-            JOptionPane.showMessageDialog(null, "Error, please enter a number that is available on the menu.");
-                return 0;
+            JOptionPane.showMessageDialog(null, "Please enter a number that is available on the menu.");
+                return;
         }
 
         try{
-            ticketAmount = Integer.parseInt(JOptionPane.showInputDialog("How many tickets do you want to sell for cruise " 
+            ticketAmount = Integer.parseInt(JOptionPane.showInputDialog("How many tickets do you want to sell for cruise: " 
             + cruisesArray[userOption].getCruiseID()));
+
+                if (cruisesArray[userOption].getTicketSoldCount() + ticketAmount > MAX_TICKETS){
+                    JOptionPane.showMessageDialog(null, "There are not enough tickets available for this cruise." +
+                        " There are " + (MAX_TICKETS - cruisesArray[userOption].getTicketSoldCount()) + " tickets" +
+                        " left for this cruise.");
+                            return;
+                }
+                else if(ticketAmount < 1){
+                    JOptionPane.showMessageDialog(null, "You cannot sell less than 1 ticket.");
+                        return;
+                }
+
+            cruisesArray[userOption].setTicketSoldCount(ticketAmount + cruisesArray[userOption].getTicketSoldCount());
         }catch(NumberFormatException nfe){
-            JOptionPane.showMessageDialog(null, "Error, please enter a valid integer");
+            JOptionPane.showMessageDialog(null, "Please enter a valid integer.");
+                return;
+        }catch(IllegalArgumentException iae){
+            JOptionPane.showMessageDialog(null, iae.getMessage());
+                return;
         }
 
-        if (cruisesArray[userOption].getTicketSoldCount() + ticketAmount > MAX_TICKETS){
-            JOptionPane.showMessageDialog(null, "Unable to sell tickets. The maximum # of tickets sold for a cruise is 300." +
-                " There are " + (MAX_TICKETS - cruisesArray[userOption].getTicketSoldCount()) + " tickets" +
-                " left for this cruise.");
-                return 0;
-        }
-        cruisesArray[userOption].setTicketSoldCount(ticketAmount);
-
-        //Update total earnings
+        //This line updates the total earnings accross all cruises
         cruise.setTotalEarning(cruise.getTotalEarning() + (ticketAmount*cruisesArray[userOption].getTicketCost()));
-
-        return ticketAmount * cruisesArray[userOption].getTicketCost();
+            return;
     }
 
-    //Display all cruises method
+    //Display Cruise Method, uses an empty string and for loop to build a string that can be presented to the user
+
     public static void displayCruises(cruise[] cruisesArray, int MAX_TICKETS){
         String allCruises = "";
 
         if(cruise.getCruiseCount() == 0){
-            JOptionPane.showMessageDialog(null, "There are no cruises currently.\n Returning to main menu");
+            JOptionPane.showMessageDialog(null, "There are currently no cruises.");
             return;
         }
 
@@ -276,7 +291,8 @@ public class cruiseImp{
             + "| Remaining Seats: " + (MAX_TICKETS - cruisesArray[i].getTicketSoldCount()) + "\n";
         }
 
-            allCruises +="\n\n Current number of cruises: " + cruise.getCruiseCount() + "\n Total revenue: $" + String.format("%.2f", cruise.getTotalEarning());
+        allCruises +="\n\n Current number of cruises: " + cruise.getCruiseCount() + 
+        "\n Total revenue: $" + String.format("%.2f", cruise.getTotalEarning());
         JOptionPane.showMessageDialog(null, allCruises);
     }
 }
