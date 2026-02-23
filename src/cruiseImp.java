@@ -26,6 +26,7 @@ public class cruiseImp{
                 }
                 else{
                     cruise currentCruise = createCruise();
+                    //Count is equal to 0 if error caused nothing to be returned
                     if(cruise.getCruiseCount() == 0){
                         cruisesArray[cruise.getCruiseCount()] = currentCruise;
                     }
@@ -118,22 +119,24 @@ public class cruiseImp{
     public static cruise createCruise(){
         try{
             cruise currentCruise = new cruise("J----", "location1 - location2", 0.01, 0);
-            currentCruise.setCruiseID(JOptionPane.showInputDialog("Enter a cruise ID starting with the letter \"J\"."));
+            currentCruise.setCruiseID(JOptionPane.showInputDialog("Enter a 5 character cruise ID starting with the letter \"J\"."));
             currentCruise.setCruiseRoute(JOptionPane.showInputDialog("Enter a cruise route in the format: location1 - location2."));
             currentCruise.setTicketCost(Double.parseDouble(JOptionPane.showInputDialog("Enter the ticket cost for the cruise")));
-            return currentCruise;
+                    return currentCruise;                
         }catch(IllegalArgumentException iae){
-            cruise currentCruise = new cruise("J----", "location1 - location2", 0.01, 0);
-            cruise.setCruiseCount(cruise.getCruiseCount() - 2);
-            currentCruise = null;
-            return currentCruise;
+            JOptionPane.showMessageDialog(null, iae.getMessage());
+                cruise currentCruise = new cruise("J----", "location1 - location2", 0.01, 0);
+                //Subtracting 2 from cruise count because 2 object were created throughout the function.
+                cruise.setCruiseCount(cruise.getCruiseCount() - 2);
+                currentCruise = null;
+                    return currentCruise;
         }catch(NullPointerException npe){
-            cruise currentCruise = new cruise("J----", "location1 - location2", 0.01, 0);
-            cruise.setCruiseCount(cruise.getCruiseCount() - 2);
-            JOptionPane.showMessageDialog(null, "Invalid entry. Returning to main menu.");
-            currentCruise = null;
-            return currentCruise;
-        }
+                cruise currentCruise = new cruise("J----", "location1 - location2", 0.01, 0);
+                //Subtracting 2 from cruise count because 2 object were created throughout the function.
+                cruise.setCruiseCount(cruise.getCruiseCount() - 2);
+                currentCruise = null;
+                    return currentCruise;
+                }
     }
 
     //Search for a cruise method

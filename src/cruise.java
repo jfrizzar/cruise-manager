@@ -63,7 +63,7 @@ public class cruise {
 
     public void setCruiseRoute(String cruiseRoute){
         if(cruiseRoute.isEmpty() || cruiseRoute == null){
-            throw new IllegalArgumentException("The cruise route cannot be empty. Enter a cruise route in the format:" +
+            throw new IllegalArgumentException("The cruise route cannot be empty. Enter a cruise route in the format: " +
             "location1 - location2. (e.g. Jamaica - Nassau)");
         }
         this.cruiseRoute = cruiseRoute;
@@ -88,7 +88,6 @@ public class cruise {
             this.ticketCost = ticketCost;           
         }catch(NumberFormatException nfe){
             JOptionPane.showMessageDialog(null, "The ticket cost must be a valid decimal number.");
-        }
     }
 
     public void setTicketSoldCount(int ticketSoldCount){
