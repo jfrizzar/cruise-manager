@@ -127,23 +127,21 @@ public class cruiseImp{
                 currentCruise.setTicketCost(ticketDouble);
             }catch(NumberFormatException nfe){
                 JOptionPane.showMessageDialog(null, "Enter a valid decimal number.");
+                cruise.setCruiseCount(cruise.getCruiseCount() - 1);
+                    return null;
             }catch(IllegalArgumentException iae){
                 JOptionPane.showMessageDialog(null, iae.getMessage());
+                cruise.setCruiseCount(cruise.getCruiseCount() - 1);
+                    return null;
             }
-                    return currentCruise;                
+                        return currentCruise;                
         }catch(IllegalArgumentException iae){
             JOptionPane.showMessageDialog(null, iae.getMessage());
-                cruise currentCruise = new cruise("J----", "location1 - location2", 0.01, 0);
-                //Subtracting 2 from cruise count because 2 object were created throughout the function.
-                cruise.setCruiseCount(cruise.getCruiseCount() - 2);
-                currentCruise = null;
-                    return currentCruise;
+                cruise.setCruiseCount(cruise.getCruiseCount() - 1);
+                    return null;
         }catch(NullPointerException npe){
-                cruise currentCruise = new cruise("J----", "location1 - location2", 0.01, 0);
-                //Subtracting 2 from cruise count because 2 object were created throughout the function.
-                cruise.setCruiseCount(cruise.getCruiseCount() - 2);
-                currentCruise = null;
-                    return currentCruise;
+                cruise.setCruiseCount(cruise.getCruiseCount() - 1);
+                    return null;
                 }
     }
 
